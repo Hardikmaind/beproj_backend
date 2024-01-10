@@ -1,0 +1,57 @@
+how to create a nested field in the mysql in django orm
+
+ChatGPT
+In Django ORM, you can create nested fields using ForeignKey or OneToOneField to establish relationships between different models. When you say "nested field," it often refers to a related model that is associated with another model. Here's a simple example:
+
+Let's say you have two models: Author and Book, and you want to make a nested relationship between them. An author can have multiple books, and a book is associated with one author.
+
+
+
+# models.py
+
+from django.db import models
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.name
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    publication_date = models.DateField()
+
+    def __str__(self):
+        return self.title
+
+
+
+
+In this example, the Book model has a ForeignKey field called author, which establishes a many-to-one relationship with the Author model. This means that each book has one author, but an author can have multiple books.
+
+Here's a breakdown:
+
+Author model has fields name and email.
+Book model has fields title, author (ForeignKey to Author), and publication_date.
+To use these models, you would typically create instances of the Author and Book models, and Django will handle the relationships for you:
+
+
+
+
+
+
+# Example usage
+
+# Creating an author
+author = Author.objects.create(name='John Doe', email='john@example.com')
+
+# Creating a book associated with the author
+book = Book.objects.create(title='Django for Beginners', author=author, publication_date='2024-01-10')
+
+# Querying books by author
+books_by_john_doe = Book.objects.filter(author=author)
+
+# Accessing author from a book
+book_author = book.author

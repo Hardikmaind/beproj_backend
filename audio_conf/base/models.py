@@ -2,6 +2,8 @@
 from django.db import models
 
 class User(models.Model):
+    id = models.AutoField(primary_key=True)  # Add this line
+
     user_name = models.CharField(max_length=255)
     is_registered = models.BooleanField(default=False)
     last_three_interviews_feedback = models.TextField(blank=True, null=True)
