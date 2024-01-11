@@ -11,6 +11,7 @@ class UserView(APIView):
 
         user_name = request.data.get('user_name')
         is_registered = True 
+        gender = request.data.get('gender') 
         # user = User.objects.create(user_name=user_name, is_registered=is_registered)
 
         if serializer.is_valid():
@@ -19,7 +20,8 @@ class UserView(APIView):
                 'user_id': user.id,
                 'user_name':user_name ,
                 'is_registered':is_registered,
-                'last_three_interviews_feedback': user.last_three_interviews_feedback
+                'last_three_interviews_feedback': user.last_three_interviews_feedback,
+                'gender':gender
             }
             return Response(response_data, status=status.HTTP_201_CREATED)
         else:
