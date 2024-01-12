@@ -15,6 +15,15 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import auth
+import os
+json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'beproj-a4b03-firebase-adminsdk-xjhmt-cec8955885.json')
+
+cred = credentials.Certificate(json_path)
+firebase_admin.initialize_app(cred)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -25,7 +34,7 @@ SECRET_KEY = 'django-insecure-tvnorfo*zek0ndmuvm&-p(iz5@@u$8e9avp%kfl!==-_&u*qo5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'base'
 ]
 
@@ -46,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -122,6 +133,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+# REST_FRAMEWORK = {
+#     # ... other settings
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         # 'path.to.authentication_backends.firebase_auth',  # Replace with the correct path
+#         'path.to.authentication_backends.firebase_auth',  # Replace with the correct path
+#     ]
+# }
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -132,3 +151,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True

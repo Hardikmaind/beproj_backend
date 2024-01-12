@@ -13,6 +13,8 @@ class User(models.Model):
     is_registered = models.BooleanField(default=False)
     last_three_interviews_feedback = models.TextField(blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
+    firebase_uid = models.CharField(max_length=255, default='null')  # Add this line
+
 
 
     def __str__(self):
