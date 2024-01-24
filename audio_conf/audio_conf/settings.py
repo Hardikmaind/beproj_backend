@@ -36,6 +36,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+PYDUB_FFMPEG_PATH = r'C:/ffmpeg-6.1.1-essentials_build/bin/ffmpeg.exe'
+
 
 # Application definition
 

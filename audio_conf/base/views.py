@@ -112,7 +112,8 @@ from .models import User, Interview, InterviewQuestion
 from .serializers import UserSerializer
 from firebase_admin.exceptions import FirebaseError  # Import the correct exception class
 from firebase_admin import auth
-
+from pydub import AudioSegment
+import io
 
 
 class UserView(APIView):
@@ -196,3 +197,28 @@ class UserView(APIView):
         except FirebaseError  as e:
             # Handle authentication error
             return Response({'error': 'Invalid Firebase ID token'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+from django.http import HttpResponse
+
+class GetAudio(APIView):
+    def post(self, request):
+        audio_data = request.data.get('audio')
+
+        try:
+            if audio_data:
+                # Load audio from BytesIO
+                audio = AudioSegment.from_file(io.BytesIO(audio_data), format="wav")
+
+                # Perform operations on audio if needed
+                # For now, let's convert it back to bytes and send it as a response
+                audio_bytes = audio.export(format="wav").read()
+
+                # Return the audio file as a response
+                response = HttpResponse(audio_bytes, content_type="audio/wav")
+                response['Content-Disposition'] = 'attachment; filename="output_audio.wav"'
+                return response
+            else:
+                return Response({"message": "No audio data received"}, status=400)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
