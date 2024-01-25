@@ -112,8 +112,11 @@ from .models import User, Interview, InterviewQuestion
 from .serializers import UserSerializer
 from firebase_admin.exceptions import FirebaseError  # Import the correct exception class
 from firebase_admin import auth
-from pydub import AudioSegment
-import io
+# from pydub import AudioSegment
+# import io
+from rest_framework.parsers import FileUploadParser,MultiPartParser
+from rest_framework import status
+import os
 
 
 class UserView(APIView):
@@ -199,26 +202,81 @@ class UserView(APIView):
             return Response({'error': 'Invalid Firebase ID token'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-from django.http import HttpResponse
+# from django.http import HttpResponse
 
-class GetAudio(APIView):
-    def post(self, request):
-        audio_data = request.data.get('audio')
+# class GetAudio(APIView):
+#     def post(self, request):
+#         audio_data = request.data.get('audio')
 
-        try:
-            if audio_data:
-                # Load audio from BytesIO
-                audio = AudioSegment.from_file(io.BytesIO(audio_data), format="wav")
+#         try:
+#             if audio_data:
+#                 # Load audio from BytesIO
+#                 audio = AudioSegment.from_file(io.BytesIO(audio_data), format="wav")
 
-                # Perform operations on audio if needed
-                # For now, let's convert it back to bytes and send it as a response
-                audio_bytes = audio.export(format="wav").read()
+#                 # Perform operations on audio if needed
+#                 # For now, let's convert it back to bytes and send it as a response
+#                 audio_bytes = audio.export(format="wav").read()
 
-                # Return the audio file as a response
-                response = HttpResponse(audio_bytes, content_type="audio/wav")
-                response['Content-Disposition'] = 'attachment; filename="output_audio.wav"'
-                return response
-            else:
-                return Response({"message": "No audio data received"}, status=400)
-        except Exception as e:
-            return Response({"error": str(e)}, status=500)
+#                 # Return the audio file as a response
+#                 response = HttpResponse(audio_bytes, content_type="audio/wav")
+#                 response['Content-Disposition'] = 'attachment; filename="output_audio.wav"'
+#                 return response
+#             else:
+#                 return Response({"message": "No audio data received"}, status=400)
+#         except Exception as e:
+#             return Response({"error": str(e)}, status=500)
+
+
+
+# class AudioUploadAPIView(APIView):
+#     parser_classes = [FileUploadParser]
+
+#     def post(self, request, format=None):
+#         audio_file = request.data.get('audio')
+
+#         if audio_file is None:
+#             return Response({'error': 'No audio file provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+#         # Handle the audio file as needed (e.g., save it, process it)
+#         # For example, save the audio file to the media directory
+#         audio_path = 'media/' + audio_file.name
+#         with open(audio_path, 'wb') as f:
+#             f.write(audio_file.read())
+
+#         # Return a response (you might want to customize this)
+#         return Response({'message': 'Audio uploaded successfully'}, status=status.HTTP_201_CREATED)
+
+
+
+# class AudioUploadView(APIView):
+#     parser_classes = (MultiPartParser,)
+
+#     def post(self, request, *args, **kwargs):
+#         audio_file = request.FILES.get('audio')
+
+#         with open('media/audio.wav', 'wb') as destination:
+#             for chunk in audio_file.chunks():
+#                 destination.write(chunk)
+
+#         return Response({'message': 'Audio file uploaded successfully.'})
+
+
+
+
+class AudioUploadView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    def post(self, request, *args, **kwargs):
+        audio_file = request.FILES.get('audio')
+        destination_path = 'media/audio.wav'
+
+        # Create 'media' folder if it doesn't exist
+        media_folder = os.path.dirname(destination_path)
+        if not os.path.exists(media_folder):
+            os.makedirs(media_folder)
+
+        with open(destination_path, 'wb') as destination:
+            for chunk in audio_file.chunks():
+                destination.write(chunk)
+
+        return Response({'message': 'Audio file uploaded successfully.'})
