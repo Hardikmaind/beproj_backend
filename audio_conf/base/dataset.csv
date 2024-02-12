@@ -1,0 +1,124 @@
+What is Object-Oriented Programming (OOP) in the context of Java?
+"What is a class in Java, and how is it used?"
+Define an object in Java.
+How does encapsulation work in Java?
+"What is inheritance in Java, and how is it implemented?"
+Explain the concept of polymorphism in Java.
+Differentiate between a superclass and a subclass in Java.
+What is the purpose of the super keyword in Java?
+How is method overloading achieved in Java?
+"What is the this keyword in Java, and when is it used?"
+"Describe the significance of access modifiers (public, private, protected) in Java."
+Explain the concept of abstraction in Java.
+How is the concept of an interface used in Java?
+What is the difference between an abstract class and an interface in Java?
+How does Java handle multiple inheritance through interfaces?
+What is the role of the final keyword in Java?
+How is the static keyword used in Java?
+"What is a constructor in Java, and why is it important?"
+How can you achieve encapsulation using access specifiers in Java?
+Explain the concept of method overriding in Java.
+"What is a package in Java, and how does it organize classes?"
+Describe the purpose and use of the instanceof operator in Java.
+How does Java support the concept of abstract classes?
+What is the purpose of the abstract keyword in Java?
+Explain the difference between shallow copy and deep copy in Java.
+"How does Java handle garbage collection, and why is it important?"
+What is the purpose of the interface keyword in Java?
+How can you achieve multiple inheritance in Java?
+Describe the concept of a static method in Java.
+How does Java handle the concept of method overloading and overriding?
+Explain the role of the final keyword in Java classes and methods.
+What is the purpose of the volatile keyword in Java?
+Describe the significance of the this() constructor call in Java.
+How can you implement the Singleton pattern in Java?
+Explain the concept of a nested class in Java.
+What is the role of the protected access modifier in Java?
+How does Java handle the concept of method chaining?
+Describe the Observer design pattern in the context of Java.
+What is the significance of the default method in Java interfaces?
+Explain the purpose of the clone() method in Java.
+How does Java support the concept of operator overloading?
+What is the purpose of the instanceof keyword in Java exception handling?
+Describe the concept of inner classes in Java.
+How is the equals() method used in Java for object comparison?
+Explain the concept of the hashCode() method in Java.
+How can you implement the Factory Method pattern in Java?
+What is the role of the super() method in Java constructors?
+Describe the concept of a marker interface in Java.
+How does Java support the concept of the Open/Closed Principle (OCP)?
+What is the purpose of the static block in Java?
+Explain the concept of a wrapper class in Java.
+How does Java handle the concept of method visibility across packages?
+Describe the concept of a callback function in Java.
+What is the purpose of the transient keyword in Java?
+How does Java handle the concept of exception handling in polymorphism?
+Explain the role of the throws keyword in Java exception handling.
+Describe the concept of a lambda expression in Java.
+What is the role of the enum keyword in Java?
+How does Java support the concept of interface segregation?
+Explain the purpose of the try-with-resources statement in Java.
+Describe the concept of the instanceof operator in Java generics.
+How is the super keyword used in Java generics?
+What is the purpose of the wildcard in Java generics?
+Explain the concept of covariance and contravariance in Java generics.
+How does Java support the concept of the Single Responsibility Principle (SRP)?
+What is the role of the assert keyword in Java?
+Describe the concept of the auto keyword in Java.
+How does Java handle the concept of method references?
+Explain the concept of the stream API in Java.
+What is the purpose of the Optional class in Java?
+Describe the concept of the synchronized keyword in Java.
+How does Java handle the concept of the observer pattern using built-in classes?
+What is the significance of the super keyword in Java generics?
+Explain the concept of the default method in Java interfaces.
+How does Java handle the concept of functional interfaces?
+Describe the purpose of the Predicate interface in Java.
+What is the significance of the @FunctionalInterface annotation in Java?
+Explain the concept of the Comparator interface in Java.
+How does Java support the concept of the decorator pattern?
+Describe the purpose of the volatile keyword in Java thread synchronization.
+"What is the role of the wait, notify, and notifyAll methods in Java multithreading?"
+How can you achieve thread safety in Java?
+Explain the concept of the Executor framework in Java.
+What is the purpose of the CountDownLatch class in Java?
+Describe the concept of the ForkJoinPool class in Java.
+How does Java handle the concept of immutability in strings?
+Explain the purpose of the StringBuilder class in Java.
+Describe the concept of the try-catch-finally block in Java exception handling.
+What is the significance of the throws clause in Java method declarations?
+Explain the concept of the assert statement in Java.
+Describe the purpose of the instanceof operator in Java type casting.
+How can you perform type casting in Java?
+What is the purpose of the super keyword in Java type casting?
+Explain the concept of the instanceof operator in Java array types.
+Describe the purpose of the clone() method in Java array objects.
+How does Java handle the concept of anonymous classes?
+What is the purpose of the strictfp keyword in Java?
+Describe the concept of the enum type in Java.
+How does Java handle the concept of annotations?
+What is a string in programming and data structures?
+Explain the difference between mutable and immutable strings.
+How do you reverse a string in-place?
+"What is string concatenation, and how is it different from string appending?"
+Describe the concept of string-matching algorithms.
+What is the significance of string hashing in algorithms?
+"Explain the difference between prefix, suffix, and substring in the context of strings."
+How do you find the length of a string without using any built-in functions or properties?
+Describe the process of string compression and decompression.
+What is the difference between lexicographically smaller and lexicographically larger strings?
+How do you check if two strings are anagrams of each other?
+Explain the concept of palindrome strings.
+What are the applications of the KMP (Knuth-Morris-Pratt) algorithm?
+How can you perform string pattern matching using the Rabin-Karp algorithm?
+Describe the concept of string interpolation.
+How do you implement a basic string search algorithm?
+Explain the importance of string manipulation in bioinformatics.
+Describe the steps involved in converting an integer to a string.
+What is the role of trie data structures in handling strings?
+How do you perform string matching using the Boyer-Moore algorithm?
+Explain the process of string tokenization.
+What is the purpose of the Z algorithm in string processing?
+How do you find the longest common prefix among a set of strings?
+Describe the advantages and disadvantages of using a suffix tree for string processing.
+How can you efficiently check if a given string is a rotation of another string?

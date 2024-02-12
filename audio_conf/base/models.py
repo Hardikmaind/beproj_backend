@@ -41,5 +41,17 @@ class InterviewQuestion(models.Model):
 
     def __str__(self):
         return self.question
+    
+class HrinterviewQuestions(models.Model):
+    quesionlist=models.TextField()
+    
+    def __str__(self):
+        return self.quesionlist
+    
+class TechnicalinterviewQuestions(models.Model):
+    quesionlist=models.TextField()
+    
+    def __str__(self):
+        return self.quesionlist
 
 
