@@ -1,0 +1,124 @@
+﻿Name two technologies by which you would connect two offices in remote locations.
+What is internetworking?
+Name of the software layers or User support layer in the OSI model.
+Name the hardware layers or network support layers in the OSI model.
+Define HTTPS protocol?
+Name some services provided by the application layer in the Internet model?
+In which OSI layer is the header and trailer added?
+"What happens in the OSI model, as a data packet moves from the lower to upper layers?"
+"What happens in the OSI model, as a data packet moves from the upper to lower layers?"
+What is a zone-based firewall?
+What is a server farm?
+Name the three means of user authentication.
+"What is Confidentiality, Integrity & Availability?"
+What is VPN?
+What is Symmetric and Asymmetric Encryption?
+At what layer IPsec works?
+What is a Tunnel mode?
+Define Digital Signatures?
+What is Authorization?
+What is the difference between IPS and a firewall?
+What is IP Spoofing?
+"What is the meaning of threat, vulnerability, and risk?"
+What is the main purpose of a DNS server?
+What is the protocol and port no of DNS?
+What is the position of the transmission media in the OSI model?
+What is the importance of twisting in the twisted-pair cable?
+What kind of error is undetectable by the checksum?
+Which multiplexing technique is used in the Fiber-optic links?
+What are the Advantages of Fiber Optics?
+Which of the multiplexing techniques are used to combine analog signals?
+Which of the multiplexing techniques is used to combine digital signals?
+Can IP Multicast be load-balanced?
+What is CGMP(Cisco Group Management Protocol)?
+What is Multicast?
+What is the difference between Bluetooth and wifi? 
+What is a reverse proxy?
+What is the role of address in a packet traveling through a datagram network?
+Can a routing table in the datagram network have two entries with the same destination address?
+What kind of arithmetic is used to add data items in checksum calculation?
+Define piggybacking?
+What are the advantages and disadvantages of piggybacking?
+Which technique is used in byte-oriented protocols?
+Define the term OFDM?
+What is a transparent bridge?
+What is the minimum size of the icmpV4 packet what is the maximum size of the icmpv4 packet?
+What are the two main categories of DNS messages?
+Why do we need the pop3 protocol for e-mail?
+Define the term Jitter?
+Why Bandwidth is important to network performance parameters?
+What is computer networking?
+Explain the OSI model.
+What is TCP/IP and how does it differ from OSI?
+What is a subnet mask?
+"Differentiate between a hub, switch, and router."
+What is the purpose of ARP (Address Resolution Protocol)?
+Explain the difference between half-duplex and full-duplex communication.
+What is DNS (Domain Name System) and how does it work?
+Describe the purpose of the MAC address.
+Differentiate between a gateway and a router.
+What is the purpose of ICMP (Internet Control Message Protocol)?
+Explain the concept of VLAN (Virtual Local Area Network).
+What is the difference between TCP and UDP?
+What is DHCP (Dynamic Host Configuration Protocol)?
+Explain NAT (Network Address Translation).
+What is the purpose of a firewall in networking?
+Describe the function of a proxy server.
+What is a DMZ (Demilitarized Zone)?
+Explain the purpose of the HTTP and HTTPS protocols.
+Differentiate between a public IP address and a private IP address.
+What is the purpose of a MAC table in networking?
+Explain the concept of a 3-way handshake in TCP.
+How does a DNS resolver work?
+Describe the function of a subnet in networking.
+What is the purpose of the default gateway?
+Explain the difference between symmetric and asymmetric encryption.
+What is the purpose of the TTL (Time to Live) field in IP packets?
+Describe the role of a WINS server.
+What is a broadcast domain?
+Explain the purpose of the BGP (Border Gateway Protocol).
+What is the purpose of the SSL/TLS protocol?
+Differentiate between a stateful and stateless firewall.
+What is the purpose of the ping command?
+Explain the role of a DNS server in network communication.
+What is the purpose of QoS (Quality of Service) in networking?
+Describe the concept of port forwarding.
+How does a proxy server enhance security?
+Explain the purpose of a traceroute command.
+What is the significance of the subnetting in networking?
+Describe the role of a repeater in networking.
+What is a MAC flood attack?
+Explain the concept of VLAN tagging.
+What is the purpose of the IPsec protocol?
+Describe the function of a content delivery network (CDN).
+What is a MAN (Metropolitan Area Network)?
+Explain the purpose of the STP (Spanning Tree Protocol).
+What is the purpose of the DNSSEC (Domain Name System Security Extensions)?
+Describe the role of ARP poisoning in network security.
+What is the purpose of the MPLS (Multiprotocol Label Switching)?
+Explain the concept of a honeypot in network security.
+     What is an array?
+Explain the difference between an array and a linked list.
+What is the significance of the array index starting from 0?
+Describe the concept of a dynamic array.
+What is the time complexity of accessing an element in an array?
+"Explain the term ""contiguous memory allocation"" in the context of arrays."
+Discuss the advantages and disadvantages of using an array.
+How do you find the length of an array in various programming languages?
+What is a two-dimensional array?
+Explain the concept of a jagged array.
+Discuss the differences between static and dynamic arrays.
+What is the role of the base address in an array?
+Explain the concept of array manipulation.
+How can you reverse an array in-place?
+Describe the process of rotating an array.
+"What is the significance of the ""sizeof"" operator when working with arrays?"
+"Explain the term ""sparse array."""
+What is the difference between an array and a stack?
+How can you find the second largest element in an array?
+Discuss the concept of array slicing.
+What is the maximum size of an array in a programming language?
+Explain the concept of a circular array.
+How do you handle negative indices in an array?
+What is the difference between an array and a set?
+Describe the concept of a resizable array.

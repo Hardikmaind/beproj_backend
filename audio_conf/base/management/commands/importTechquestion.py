@@ -1,7 +1,7 @@
 # your_app/management/commands/import_questions.py
 import csv
 from django.core.management.base import BaseCommand
-from ...models import HrInterviewQuestions  # Use absolute import
+from ...models import TechnicalInterviewQuestions  # Use absolute import
 
 class Command(BaseCommand):
     help = 'Import questions from a CSV file'
@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
             for row in reader:
                 question_list = row[0]  # Adjust column index as needed
-                HrInterviewQuestions.objects.create(question_list=question_list)
+                TechnicalInterviewQuestions.objects.create(question_list=question_list)
                 self.stdout.write(self.style.SUCCESS(f'Successfully created question: {question_list}'))
         # HrinterviewQuestions.objects.all().delete()           //this is used to delete the all the rows and empty
         
