@@ -99,13 +99,23 @@ WSGI_APPLICATION = 'audio_conf.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BE',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'hardik',
+        'USER': 'admin',
+        'PASSWORD': 'database-1hardikdatabase-1hardik',
+        'HOST': 'database-1hardik.cp06s2y6qxxa.ap-south-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'BE',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 # this is for the  linux=>
 

@@ -108,7 +108,7 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import User, Interview, InterviewQuestion
+from .models import User, Interview
 from .serializers import UserSerializer
 from firebase_admin.exceptions import FirebaseError  # Import the correct exception class
 from firebase_admin import auth
