@@ -108,8 +108,8 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import User, Interview
-from .serializers import UserSerializer
+from .models import User, TechnicalInterviewQuestions,HrInterviewQuestions
+from .serializers import UserSerializer,TechnicalInterviewQuestionsSerializer
 from firebase_admin.exceptions import FirebaseError  # Import the correct exception class
 from firebase_admin import auth
 # from pydub import AudioSegment
@@ -280,3 +280,19 @@ class AudioUploadView(APIView):
                 destination.write(chunk)
 
         return Response({'message': 'Audio file uploaded successfully.'})
+
+
+
+class TechQuestions(APIView):
+    def get(self, request):
+        interview_questions = TechnicalInterviewQuestions.objects.all().order_by('?')[:10]
+        serialized_questions = TechnicalInterviewQuestionsSerializer(interview_questions, many=True)  # Replace YourSerializerNameHere with your actual serializer
+        return Response({'interview_questions': serialized_questions.data})
+    
+
+
+class HrQuestions(APIView):
+    def get(self, request):
+        interview_questions = HrInterviewQuestions.objects.all().order_by('?')[:10]
+        serialized_questions = TechnicalInterviewQuestionsSerializer(interview_questions, many=True)  # Replace YourSerializerNameHere with your actual serializer
+        return Response({'interview_questions': serialized_questions.data})
