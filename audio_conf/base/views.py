@@ -109,7 +109,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import User, TechnicalInterviewQuestions,HrInterviewQuestions
-from .serializers import UserSerializer,TechnicalInterviewQuestionsSerializer
+from .serializers import UserSerializer,TechnicalInterviewQuestionsSerializer,HrInterviewQuestionsSerializer
 from firebase_admin.exceptions import FirebaseError  # Import the correct exception class
 from firebase_admin import auth
 # from pydub import AudioSegment
@@ -294,5 +294,5 @@ class TechQuestions(APIView):
 class HrQuestions(APIView):
     def get(self, request):
         interview_questions = HrInterviewQuestions.objects.all().order_by('?')[:10]
-        serialized_questions = TechnicalInterviewQuestionsSerializer(interview_questions, many=True)  # Replace YourSerializerNameHere with your actual serializer
+        serialized_questions = HrInterviewQuestionsSerializer(interview_questions, many=True)  # Replace YourSerializerNameHere with your actual serializer
         return Response({'interview_questions': serialized_questions.data})

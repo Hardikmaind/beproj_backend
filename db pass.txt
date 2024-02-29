@@ -1,0 +1,2 @@
+mysql -h database-1hardik.cp06s2y6qxxa.ap-south-1.rds.amazonaws.com -u admin -p -P 3306 -D hardik
+database-1hardikdatabase-1hardik

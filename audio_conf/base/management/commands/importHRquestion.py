@@ -7,7 +7,7 @@ class Command(BaseCommand):
     help = 'Import questions from a CSV file'
 
     def add_arguments(self, parser):
-        parser.add_argument('csv_file', type=str, help='Path to the CSV file', default='audio_conf/base/dataset.csv')
+        parser.add_argument('csv_file', type=str, help='Path to the CSV file', default='audio_conf/base/dataset/hr.csv')
 
     def handle(self, *args, **kwargs):
         csv_file = kwargs['csv_file']
@@ -23,7 +23,7 @@ class Command(BaseCommand):
         # HrinterviewQuestions.objects.all().delete()           //this is used to delete the all the rows and empty
         
         
-# python manage.py importTechquestion .\base\dataset.csv          //use this command to do the filling the database in root directory 
+# python manage.py importTechquestion .\base\hr.csv          //use this command to do the filling the database in root directory 
     
                 
                 
