@@ -295,7 +295,7 @@ class AudioUploadView(APIView):
                 transcript_file.write(transcript.text + '\n')
 
             return Response({'message': 'Audio file uploaded successfully.',
-                             'transcription': transcript.text})
+                            'transcription': transcript.text})
 
         except Exception as e:
             error_message = f"An error occurred: {e}"
