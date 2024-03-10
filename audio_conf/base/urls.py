@@ -7,5 +7,6 @@ urlpatterns = [
     path('upload_audio/', AudioUploadView.as_view(), name='upload_audio'),
     path('tech_questions/', TechQuestions.as_view(), name='tech_questions'),
     path('hr_questions/', HrQuestions.as_view(), name='hr_questions'),
+    
 
 ]

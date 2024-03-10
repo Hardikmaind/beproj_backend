@@ -340,4 +340,7 @@ class HrQuestions(APIView):
     
     
     
-# class
+class generate_interviewId(APIView):
+    def get(self, request):
+        interview_id = Interview.objects.latest('interview_id')
+        return Response({'interview_id': interview_id.interview_id+1})
