@@ -117,7 +117,13 @@ from firebase_admin import auth
 from rest_framework.parsers import FileUploadParser,MultiPartParser
 from rest_framework import status
 import os
+import assemblyai as aai
+import logging
 
+
+aai.settings.api_key = "9cbde6c6d6304bdca7188b6c01c9118f"
+transcriber = aai.Transcriber()
+logger = logging.getLogger(__name__)
 
 class UserView(APIView):
     
@@ -262,24 +268,59 @@ class UserView(APIView):
 
 
 
-
 class AudioUploadView(APIView):
     parser_classes = (MultiPartParser,)
+    transcript_file_path = 'media/transcript.txt'
 
     def post(self, request, *args, **kwargs):
-        audio_file = request.FILES.get('audio')
-        destination_path = 'media/audio.wav'
+        try:
+            audio_file = request.FILES.get('audio')
+            destination_path = 'media/audio.wav'
 
-        # Create 'media' folder if it doesn't exist
-        media_folder = os.path.dirname(destination_path)
-        if not os.path.exists(media_folder):
-            os.makedirs(media_folder)
+            # Create 'media' folder if it doesn't exist
+            media_folder = os.path.dirname(destination_path)
+            if not os.path.exists(media_folder):
+                os.makedirs(media_folder)
 
-        with open(destination_path, 'wb') as destination:
-            for chunk in audio_file.chunks():
-                destination.write(chunk)
+            with open(destination_path, 'wb') as destination:
+                for chunk in audio_file.chunks():
+                    destination.write(chunk)
+            transcriber = aai.Transcriber()
 
-        return Response({'message': 'Audio file uploaded successfully.'})
+            # Transcribe the uploaded audio file
+            transcript = transcriber.transcribe(destination_path)
+
+            # Append the transcript text to the text file
+            with open(self.transcript_file_path, 'a') as transcript_file:
+                transcript_file.write(transcript.text + '\n')
+
+            return Response({'message': 'Audio file uploaded successfully.',
+                             'transcription': transcript.text})
+
+        except Exception as e:
+            error_message = f"An error occurred: {e}"
+            logger.error(error_message)
+            return Response({'error': error_message}, status=500)
+
+
+
+# class AudioUploadView(APIView):
+#     parser_classes = (MultiPartParser,)
+
+#     def post(self, request, *args, **kwargs):
+#         audio_file = request.FILES.get('audio')
+#         destination_path = 'media/audio.wav'
+
+#         # Create 'media' folder if it doesn't exist
+#         media_folder = os.path.dirname(destination_path)
+#         if not os.path.exists(media_folder):
+#             os.makedirs(media_folder)
+
+#         with open(destination_path, 'wb') as destination:
+#             for chunk in audio_file.chunks():
+#                 destination.write(chunk)
+
+#         return Response({'message': 'Audio file uploaded successfully.'})
 
 
 
@@ -296,3 +337,7 @@ class HrQuestions(APIView):
         interview_questions = HrInterviewQuestions.objects.all().order_by('?')[:10]
         serialized_questions = HrInterviewQuestionsSerializer(interview_questions, many=True)  # Replace YourSerializerNameHere with your actual serializer
         return Response({'interview_questions': serialized_questions.data})
+    
+    
+    
+# class
