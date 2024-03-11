@@ -8,6 +8,7 @@ from .models import User, TechnicalInterviewQuestions,HrInterviewQuestions
 from .serializers import UserSerializer,TechnicalInterviewQuestionsSerializer,HrInterviewQuestionsSerializer
 from firebase_admin.exceptions import FirebaseError  # Import the correct exception class
 from firebase_admin import auth
+from .utils.bert_grammer import grammar
 # from pydub import AudioSegment
 # import io
 from rest_framework.parsers import FileUploadParser,MultiPartParser
@@ -108,23 +109,61 @@ class UserView(APIView):
 
 
 
+# class AudioUploadView(APIView):
+#     parser_classes = (MultiPartParser,)
+#     transcript_file_path = 'media/transcript.txt'
+
+#     def post(self, request, *args, **kwargs):
+#         try:
+#             audio_file = request.FILES.get('audio')
+#             destination_path = 'media/audio.wav'
+
+#             # Create 'media' folder if it doesn't exist
+#             media_folder = os.path.dirname(destination_path)
+#             if not os.path.exists(media_folder):
+#                 os.makedirs(media_folder)
+
+#             with open(destination_path, 'wb') as destination:
+#                 for chunk in audio_file.chunks():
+#                     destination.write(chunk)
+#             transcriber = aai.Transcriber()
+
+#             # Transcribe the uploaded audio file
+#             transcript = transcriber.transcribe(destination_path)
+
+#             # Append the transcript text to the text file
+#             with open(self.transcript_file_path, 'a') as transcript_file:
+#                 transcript_file.write(transcript.text + '\n')
+
+#             return Response({'message': 'Audio file uploaded successfully.',
+#                             'transcription': transcript.text})
+
+#         except Exception as e:
+#             error_message = f"An error occurred: {e}"
+#             logger.error(error_message)
+#             return Response({'error': error_message}, status=500)
+
 class AudioUploadView(APIView):
     parser_classes = (MultiPartParser,)
     transcript_file_path = 'media/transcript.txt'
+    audio_folder_path = 'media/'
 
     def post(self, request, *args, **kwargs):
         try:
             audio_file = request.FILES.get('audio')
-            destination_path = 'media/audio.wav'
 
             # Create 'media' folder if it doesn't exist
-            media_folder = os.path.dirname(destination_path)
-            if not os.path.exists(media_folder):
-                os.makedirs(media_folder)
+            if not os.path.exists(self.audio_folder_path):
+                os.makedirs(self.audio_folder_path)
+
+            # Generate a unique filename based on existing files
+            recording_number = self._get_next_recording_number()
+            destination_path = os.path.join(self.audio_folder_path, f'Recording ({recording_number}).wav')
 
             with open(destination_path, 'wb') as destination:
                 for chunk in audio_file.chunks():
                     destination.write(chunk)
+
             transcriber = aai.Transcriber()
 
             # Transcribe the uploaded audio file
@@ -133,14 +172,24 @@ class AudioUploadView(APIView):
             # Append the transcript text to the text file
             with open(self.transcript_file_path, 'a') as transcript_file:
                 transcript_file.write(transcript.text + '\n')
+            grammar(r'audio_conf\media\transcript.txt')
 
-            return Response({'message': 'Audio file uploaded successfully.',
-                            'transcription': transcript.text})
+            return Response({
+                'message': 'Audio file uploaded successfully.',
+                'transcription': transcript.text
+            })
 
         except Exception as e:
             error_message = f"An error occurred: {e}"
             logger.error(error_message)
             return Response({'error': error_message}, status=500)
+
+    def _get_next_recording_number(self):
+        # Find the next available recording number
+        recording_number = 0
+        while os.path.exists(os.path.join(self.audio_folder_path, f'Recording ({recording_number}).wav')):
+            recording_number += 1
+        return recording_number
 
 
 
