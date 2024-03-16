@@ -108,16 +108,16 @@ WSGI_APPLICATION = 'audio_conf.wsgi.application'
 # }
 
 # this is for the windows xampp server
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'demo',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'demo',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 # this is for the  linux=>
 
@@ -144,6 +144,18 @@ DATABASES = {
 #         'PORT': '3306',
 #     }
 # }
+
+# this below is for railway
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',
+        'USER': 'root',
+        'PASSWORD': 'lxIwJqnUXBPLnxRdRWcHihdjeYKaLKLf',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '47249',
+    }
+}
 
 
 
@@ -184,8 +196,13 @@ USE_TZ = True
 #     # ... other settings
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
 #         # 'path.to.authentication_backends.firebase_auth',  # Replace with the correct path
-#         'path.to.authentication_backends.firebase_auth',  # Replace with the correct path
-#     ]
+#         'audio_conf.authentication_backends.FirebaseAuthentication',  # Corrected import path
+#     ],
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',  # Require authentication for all endpoints
+#         'rest_framework.permissions.IsAuthenticatedOrReadOnly',  # Require authentication for all endpoints
+#         # Add any other default permission classes here as needed
+#     ],
 # }
 
 
