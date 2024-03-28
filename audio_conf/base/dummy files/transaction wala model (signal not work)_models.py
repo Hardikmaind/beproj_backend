@@ -1,5 +1,3 @@
-
-
 # from django.db import models
 
 # class User(models.Model):
@@ -75,7 +73,6 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
 class User(models.Model):
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -104,16 +101,6 @@ class TechnicalInterviewQuestions(models.Model):
     def __str__(self):
         return self.question_list
 
-
-
-
-
-
-from django.db.models import Max
-
-
-
-
 class Interview(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     interview_id = models.AutoField(primary_key=True, editable=False)
@@ -126,19 +113,14 @@ class Interview(models.Model):
         return f"Interview ID: {self.interview_id} - User: {self.user.user_name} - Type: {self.type_of_interview}  - User Interview No: {self.user_interview_no}"
 
 # Signal to reset interview ID sequence after creating a new user
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-@receiver(post_save, sender=Interview)
-def update_user_interview_no(sender, instance, created, **kwargs):
-    try:
-        if created:
-            max_user_interview_no = instance.user.interview_set.aggregate(Max('user_interview_no'))['user_interview_no__max'] or 0
-            instance.user_interview_no = max_user_interview_no + 1
-            instance.save()
-    except Exception as e:
-        print(e)
-
+@receiver(post_save, sender=User)
+def reset_interview_id_sequence(sender, instance, created, **kwargs):
+    if created:
+        user_interview_no = instance.interview_set.aggregate(Max('user_interview_no'))['user_interview_no__max'] or 0
+        if user_interview_no:
+            instance.interview_set.update(user_interview_no=models.F('user_interview_no') + 1)
+        else:
+            instance.interview_set.update(user_interview_no=1)
 
 
 class Feedback(models.Model):

@@ -1,3 +1,5 @@
+
+
 from MySQLdb import IntegrityError
 from django.shortcuts import render
 from rest_framework import status
@@ -15,10 +17,7 @@ from rest_framework import status
 import os
 import assemblyai as aai
 import logging
-from django.db.models import Max
-from django.db import transaction
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 
 
 aai.settings.api_key = "9cbde6c6d6304bdca7188b6c01c9118f"
@@ -220,7 +219,8 @@ class HrQuestions(APIView):
 
 
 
-
+from django.db.models import Max
+from django.db import transaction
 
 class InterviewCreate(APIView):
     def post(self, request):
@@ -238,13 +238,17 @@ class InterviewCreate(APIView):
         except User.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        # Create the Interview instance without setting user_interview_no
-        interview = Interview(user=user, type_of_interview=interview_type)
+        with transaction.atomic():
+            # Get the max user_interview_no for the user
+            max_user_interview_no = user.interview_set.aggregate(Max('user_interview_no'))['user_interview_no__max'] or 0
+            new_user_interview_no = max_user_interview_no + 1
 
-        try:
-            interview.save()
-        except IntegrityError as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            # Create the Interview instance
+            try:
+                interview = Interview(user=user, type_of_interview=interview_type, user_interview_no=new_user_interview_no)
+                interview.save()
+            except IntegrityError as e:
+                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         # Serialize the interview instance
         serializer = InterviewSerializer(interview)
@@ -269,3 +273,8 @@ class FeedbackUpdate(APIView):
         serializer = InterviewSerializer(interview)
         
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+
+
