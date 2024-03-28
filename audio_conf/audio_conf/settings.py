@@ -108,16 +108,16 @@ WSGI_APPLICATION = 'audio_conf.wsgi.application'
 # }
 
 # this is for the windows xampp server
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'demo',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'testing',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 # this is for the  linux=>
 
@@ -146,16 +146,16 @@ WSGI_APPLICATION = 'audio_conf.wsgi.application'
 # }
 
 # this below is for railway
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'lxIwJqnUXBPLnxRdRWcHihdjeYKaLKLf',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '47249',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'railway',
+#         'USER': 'root',
+#         'PASSWORD': 'lxIwJqnUXBPLnxRdRWcHihdjeYKaLKLf',
+#         'HOST': 'roundhouse.proxy.rlwy.net',
+#         'PORT': '47249',
+#     }
+# }
 
 
 

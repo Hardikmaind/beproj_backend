@@ -23,7 +23,7 @@ class Command(BaseCommand):
         # HrinterviewQuestions.objects.all().delete()           //this is used to delete the all the rows and empty
         
         
-# python manage.py importTechquestion .\base\hr.csv          //use this command to do the filling the database in root directory 
+#python manage.py importHRquestion .\base\dataset\hr.csv                 //use this command to do the filling the database in root directory 
     
                 
                 

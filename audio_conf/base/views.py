@@ -1,11 +1,12 @@
 
 
+from MySQLdb import IntegrityError
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import User, TechnicalInterviewQuestions,HrInterviewQuestions
-from .serializers import UserSerializer,TechnicalInterviewQuestionsSerializer,HrInterviewQuestionsSerializer
+from .models import User, TechnicalInterviewQuestions,HrInterviewQuestions,Interview
+from .serializers import UserSerializer,TechnicalInterviewQuestionsSerializer,HrInterviewQuestionsSerializer,InterviewSerializer,FeedbackSerializer
 from firebase_admin.exceptions import FirebaseError  # Import the correct exception class
 from firebase_admin import auth
 from .utils.bert_grammer import grammar
@@ -16,6 +17,7 @@ from rest_framework import status
 import os
 import assemblyai as aai
 import logging
+
 
 
 aai.settings.api_key = "9cbde6c6d6304bdca7188b6c01c9118f"
@@ -213,7 +215,61 @@ class HrQuestions(APIView):
     
     
     
-class generate_interviewId(APIView):
-    def get(self, request):
-        interview_id = Interview.objects.latest('interview_id')
-        return Response({'interview_id': interview_id.interview_id+1})
+
+
+
+
+from django.db.models import Max
+from django.db import transaction
+
+class InterviewCreate(APIView):
+    def post(self, request):
+        # Extract data from the request
+        user_id = request.data.get('user_id')
+        interview_type = request.data.get('interview_type')
+
+        # Check if the interview_type is valid
+        if interview_type not in ['HR', 'Technical']:
+            return Response({'error': 'Invalid interview type'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Check if the user exists
+        try:
+            user = User.objects.get(firebase_uid=user_id)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        with transaction.atomic():
+            # Get the max user_interview_no for the user
+            max_user_interview_no = user.interview_set.aggregate(Max('user_interview_no'))['user_interview_no__max'] or 0
+            new_user_interview_no = max_user_interview_no + 1
+
+            # Create the Interview instance
+            try:
+                interview = Interview(user=user, type_of_interview=interview_type, user_interview_no=new_user_interview_no)
+                interview.save()
+            except IntegrityError as e:
+                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Serialize the interview instance
+        serializer = InterviewSerializer(interview)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class FeedbackUpdate(APIView):
+    def put(self, request, interview_id):
+        # Extract data from the request
+        feedback = request.data.get('feedback')
+        
+        # Retrieve the interview instance
+        try:
+            interview = Interview.objects.get(interview_id=interview_id)
+        except Interview.DoesNotExist:
+            return Response({'error': 'Interview not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Update the feedback field
+        interview.feedback = feedback
+        interview.save()
+        
+        # Serialize the updated interview instance
+        serializer = InterviewSerializer(interview)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
