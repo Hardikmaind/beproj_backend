@@ -1,3 +1,3 @@
-Username (leave blank to use 'hardikmaind'): admin
+Username (leave blank to use 'hardikmaind'): hardikmaind
 Email address: hardikmaind@gmail.com
 pass-admin
