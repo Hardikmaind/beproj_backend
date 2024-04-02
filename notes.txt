@@ -1,2 +1,18 @@
 audio confidence- dont send the quesiton only send the audio
 grammer check - send the audio and quesiton to the chirp ml model
+
+
+
+
+
+
+
+# bert grammer and setiment  needed to be called  at the end. 
+# transcription will be created for every answer
+
+
+# trasncription has nothing to do with bertgrammmer
+
+
+#in transcription file we are writing the answer
+

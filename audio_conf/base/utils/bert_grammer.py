@@ -80,7 +80,23 @@ from torch.nn.functional import softmax
 from transformers import BertForSequenceClassification, BertTokenizer
 import pickle, os
 from django.conf import settings
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+
+
+
+def classify_sentiment(compound_score):
+    if compound_score >= 0.05:
+        return 1  # Positive sentiment
+    elif compound_score <= -0.05:
+        return -1  # Negative sentiment
+    else:
+        return 0  # Neutral sentiment
+    
+    
+    
+    
+    
 def grammar(path):
     # Load the saved model and tokenizer
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -111,7 +127,7 @@ def grammar(path):
 
     # Move inputs to the device (CPU in this case)
     input_id = encoded_dict['input_ids']
-    attention_mask = encoded_dict['attention_mask']
+    attention_mask = encoded_dict['attention_mask'] 
     input_id = input_id.to('cpu')
     attention_mask = attention_mask.to('cpu')
 
@@ -132,6 +148,21 @@ def grammar(path):
     excellent_threshold = 0.8
     good_threshold = 0.6
     fair_threshold = 0.4
+    
+    
+    #this is for the sentiment analysis
+    analyzer = SentimentIntensityAnalyzer()
+    
+    vs = analyzer.polarity_scores(transcribed_text)
+    compound_score = vs['compound']
+    sentiment_label = classify_sentiment(compound_score)
+    print("transcribed_text:", transcribed_text)
+    print("Compound Score:", compound_score)
+    print("Sentiment Label:", sentiment_label)
+    print()
+    
+    
+    
 
     # Classify the grammar score
     if grammar_score >= excellent_threshold:
@@ -148,5 +179,8 @@ def grammar(path):
     with open(bertoutput, 'a') as bertoutput:
         bertoutput.write(f"Grammar Score: {grammar_score}\n")
         bertoutput.write(f"Suggestion: {suggestion}\n")
+        bertoutput.write(f"Sentiment Label: {sentiment_label}\n")
 
     return {'Grammar Score': grammar_score, 'Suggestion': suggestion}
+
+

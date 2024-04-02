@@ -4,3 +4,39 @@ Grammar Score: 0.14460110664367676
 Suggestion: Your grammar needs significant improvement. Consider seeking additional resources or guidance.
 Grammar Score: 0.13479217886924744
 Suggestion: Your grammar needs significant improvement. Consider seeking additional resources or guidance.
+Grammar Score: 0.8893035054206848
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 0
+Grammar Score: 0.891795814037323
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8976510167121887
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8780490756034851
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8766368627548218
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8826747536659241
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8428259491920471
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8240948915481567
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.837223470211029
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8413457274436951
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8320673108100891
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1
+Grammar Score: 0.8378401398658752
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: 1

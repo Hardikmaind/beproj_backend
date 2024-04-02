@@ -269,3 +269,31 @@ class FeedbackUpdate(APIView):
         serializer = InterviewSerializer(interview)
         
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+
+class QuestionFromClient(APIView):
+    def post(self, request):
+        # Extract data from the request
+        interview_questions = request.data.get('interview_questions', [])  # Get the interview questions array
+
+        # Extract question_list attribute from each object in the interview_questions array
+        question_list = [question.get('question_list') for question in interview_questions]
+
+        # Define the file path where the text file will be saved
+        file_path = 'media/interview_questions.txt'
+
+        # Check if the file exists, if not, create it
+        if not os.path.exists(file_path):
+            with open(file_path, 'w') as file:
+                pass  # Create an empty file
+
+        # Write the question_list to the text file
+        with open(file_path, 'a') as file:
+            for question in question_list:
+                file.write(f'{question}\n')  # Write each question to a new line in the file
+
+        return Response({'message': 'Questions saved to file successfully.'}, status=status.HTTP_200_OK)
+
+      

@@ -1,0 +1,10 @@
+What is the purpose of the volatile keyword in Java?
+Describe the concept of a lambda expression in Java.
+How do you implement a basic string search algorithm?
+Describe the purpose and use of the instanceof operator in Java.
+What is a zone-based firewall?
+Describe the concept of inner classes in Java.
+What is the role of the base address in an array?
+Explain the concept of method overriding in Java.
+Explain the concept of a jagged array.
+Explain the concept of the assert statement in Java.
