@@ -156,10 +156,10 @@ def grammar(path):
     vs = analyzer.polarity_scores(transcribed_text)
     compound_score = vs['compound']
     sentiment_label = classify_sentiment(compound_score)
-    print("transcribed_text:", transcribed_text)
-    print("Compound Score:", compound_score)
-    print("Sentiment Label:", sentiment_label)
-    print()
+    # print("transcribed_text:", transcribed_text)
+    # print("Compound Score:", compound_score)
+    # print("Sentiment Label:", sentiment_label)
+    # print()
     
     
     

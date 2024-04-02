@@ -273,6 +273,7 @@ class FeedbackUpdate(APIView):
 
 
 
+
 class QuestionFromClient(APIView):
     def post(self, request):
         # Extract data from the request
@@ -284,16 +285,19 @@ class QuestionFromClient(APIView):
         # Define the file path where the text file will be saved
         file_path = 'media/interview_questions.txt'
 
-        # Check if the file exists, if not, create it
-        if not os.path.exists(file_path):
-            with open(file_path, 'w') as file:
-                pass  # Create an empty file
+        try:
+            # Check if the file exists, if not, create it
+            if not os.path.exists(file_path):
+                with open(file_path, 'w') as file:
+                    pass  # Create an empty file
 
-        # Write the question_list to the text file
-        with open(file_path, 'a') as file:
-            for question in question_list:
-                file.write(f'{question}\n')  # Write each question to a new line in the file
+            # Write the question_list to the text file
+            with open(file_path, 'a') as file:
+                for question in question_list:
+                    file.write(f'{question}\n')  # Write each question to a new line in the file
 
-        return Response({'message': 'Questions saved to file successfully.'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Questions saved to file successfully.'}, status=status.HTTP_200_OK)
 
-      
+        except Exception as e:
+            logger.error(f'Error saving questions to file: {e}')
+            return Response({'error': 'Error saving questions to file.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
