@@ -301,3 +301,63 @@ class QuestionFromClient(APIView):
         except Exception as e:
             logger.error(f'Error saving questions to file: {e}')
             return Response({'error': 'Error saving questions to file.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from .utils.geminiModel.gemini import rate_answer
+class Getcorrection(APIView):
+    def get(self, request):
+        # this will not let the code to be in deadlock and prevent from cyclic import
+        questions_file = 'media/interview_questions.txt'
+        answers_file = 'media/transcript.txt'
+        output_file = 'media/correctness.txt'
+
+        # Read questions from the questions file
+        try:
+            with open(questions_file, 'r') as qf:
+                questions = qf.readlines()
+        except OSError as e:
+            return Response({'error': f"Error reading questions file: {e}"}, status=500)
+
+        # Read answers from the answers file
+        try:
+            with open(answers_file, 'r') as af:
+                answers = af.readlines()
+        except OSError as e:
+            return Response({'error': f"Error reading answers file: {e}"}, status=500)
+
+        if len(questions) != len(answers):
+            return Response({'error': 'Number of questions does not match number of answers'}, status=400)
+
+        output_results = []
+
+        for question, answer in zip(questions, answers):
+            question = question.strip()
+            answer = answer.strip()
+
+            # Call rate_answer function for each question-answer pair
+            rate_answer(question, answer, output_file)
+
+            # Append the result to the output_results list
+            output_results.append({'question': question, 'answer': answer})
+
+        return Response({'results': output_results})
+
+
+
+

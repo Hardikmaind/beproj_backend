@@ -1,13 +1,1 @@
-
-Describe the concept of new type in Java.
-This is Peter. This is Johnny, Kenny and Josh. We just wanted to take a minute to thank you.
-Describe the observer design pattern in the context of Java.
-What is the significance of string hashing in algorithm.
-Does Java handle multiple enherence through interfaces?
-What are the advantages of fiber optics?
-Describe the concept of the try catch. Finally, block in Java exception handling.
-Name of the software. Leversore uses a foot layer in the OSI model.
-How can you efficiently check if a given string is a rotation of another string?
-How can you implement the factory method pattern in Java?
-Why do we need the pop three protocol for email?
-Explain the achievement.
+The volatile keyword in Java is used to indicate that a variable's value can be modified by different threads. Used with the syntax, volatile dataType variableName = x; It ensures that changes made to a volatile variable by one thread are immediately visible to other threads.

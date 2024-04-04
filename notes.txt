@@ -16,3 +16,8 @@ grammer check - send the audio and quesiton to the chirp ml model
 
 #in transcription file we are writing the answer
 
+
+
+
+note for 4/4/24
+make one api for feedback whi will take the interview id and intertype with it. now in view of this will do first kiran wala (conditionally in case of only technocal)then then will do vaibhavi wala (and resullt fromn vaibhavi wala just get into array and send that array as a response no need to do io operation) with sentiment then do bert then clear do txt file for next req.. 
