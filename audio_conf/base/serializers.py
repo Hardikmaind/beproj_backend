@@ -29,3 +29,16 @@ class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
         fields = ['interview', 'feedback_text']
+        
+        
+
+
+
+# gemini_rating/serializers.py
+from rest_framework import serializers
+
+class RatingSerializer(serializers.Serializer):
+    question = serializers.CharField()
+    answer = serializers.CharField()
+    rating = serializers.FloatField()
+    suggestion = serializers.CharField(allow_null=True)

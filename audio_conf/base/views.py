@@ -319,45 +319,170 @@ class QuestionFromClient(APIView):
 
 
 
-from .utils.geminiModel.gemini import rate_answer
-class Getcorrection(APIView):
+
+
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import Interview
+from .serializers import InterviewSerializer
+
+class GetInterviewFeedback(APIView):
     def get(self, request):
-        # this will not let the code to be in deadlock and prevent from cyclic import
-        questions_file = 'media/interview_questions.txt'
-        answers_file = 'media/transcript.txt'
-        output_file = 'media/correctness.txt'
-
-        # Read questions from the questions file
+        userid = request.data.get('user')  # Use query_params for GET requests
+        
+        if userid is None:
+            return Response({'error': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
         try:
-            with open(questions_file, 'r') as qf:
-                questions = qf.readlines()
-        except OSError as e:
-            return Response({'error': f"Error reading questions file: {e}"}, status=500)
+            interviews = Interview.objects.filter(user=userid)  # Filter by user ID
+            serialized_interviews = InterviewSerializer(interviews, many=True)
+            return Response(serialized_interviews.data)
+        except Interview.DoesNotExist:
+            return Response({'error': 'Interviews not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        # Read answers from the answers file
-        try:
-            with open(answers_file, 'r') as af:
-                answers = af.readlines()
-        except OSError as e:
-            return Response({'error': f"Error reading answers file: {e}"}, status=500)
 
-        if len(questions) != len(answers):
-            return Response({'error': 'Number of questions does not match number of answers'}, status=400)
 
-        output_results = []
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework import status
+
+# import google.generativeai as genai
+# import re
+
+# # Set your Gemini API key here
+# YOUR_API_KEY = "AIzaSyDKIARUcsy7sU9o5gkmFgg50YX-nY21Thg"
+# genai.configure(api_key=YOUR_API_KEY)
+
+# class RateAnswerView(APIView):
+
+#     def get(self, request):
+#         try:
+#             question = request.GET.get('question')
+#             user_answer = request.GET.get('user_answer')
+
+#             if not question or not user_answer:
+#                 return Response({'error': 'Please provide both question and user_answer parameters.'},
+#                                 status=status.HTTP_400_BAD_REQUEST)
+
+#             rating = rate_answer(question, user_answer, "gemini_output1.txt")  # Adjust output file path if needed
+
+#             return Response({'rating': rating})
+
+#         except Exception as e:
+#             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# # Re-use the existing functions for rating and extraction
+
+# def rate_answer(question, user_answer, output_file):
+#     # Initialize the Gemini model
+#     model = genai.GenerativeModel('gemini-pro')
+
+#     # Generate a prompt by combining the question and user's answer
+#     prompt = f"Question: {question}\nAnswer: {user_answer}\n Rate the correctness of the answer out of 10."
+
+#     # Generate content using the prompt
+#     response = model.generate_content(prompt)
+
+#     # Print the response to inspect it
+#     print("Gemini Response:")
+#     print(response.text)
+
+#     # Extract the rating from the response
+#     rating = extract_rating(response.text)
+
+#     # Write the rating and/or suggestion to the output file
+#     with open(output_file, 'a') as f:
+#         f.write(f"Question: {question}\nUser's Answer: {user_answer}\n")
+#         if rating is not None:
+#             if rating >= 7:
+#                 f.write(f"Rating: {rating}/10\n\n")
+#             else:
+#                 f.write(f"Rating: {rating}/10\nSuggestion:\n{response.text}\n\n")
+#         else:
+#             f.write("Failed to rate the answer.\n\n")
+
+#     return rating
+
+# def extract_rating(response_text):
+#     # Search for a numeric rating pattern in the response text
+#     match = re.search(r'\b\d+(\.\d+)?/10\b', response_text)
+#     if match:
+#         rating = float(match.group(0).split('/')[0])
+#         if 0 <= rating <= 10:
+#             return rating
+#     return None
+
+
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from google.ai import generativelanguage_v1beta
+from google.generativeai import GenerativeModel
+import re
+
+def extract_rating(response_text):
+    match = re.search(r'\b\d+(\.\d+)?/10\b', response_text)
+    if match:
+        rating = float(match.group(0).split('/')[0])
+        if 0 <= rating <= 10:
+            return rating
+    return None
+
+class RateAnswersAPIView(APIView):
+
+    def get(self, request, format=None):
+        YOUR_API_KEY = "AIzaSyDKIARUcsy7sU9o5gkmFgg50YX-nY21Thg"  # Hardcoded API key
+        if not YOUR_API_KEY:
+            return Response({"error": "Gemini API key not provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Configure the Gemini API with your API key
+        from google.generativeai import configure
+        configure(api_key=YOUR_API_KEY)
+
+        questions_file_path = "media/interview_questions.txt"  # Hardcoded file paths
+        answers_file_path = "media/transcript.txt"
+
+        with open(questions_file_path, 'r') as questions_file:
+            questions = [line.strip() for line in questions_file]
+
+        with open(answers_file_path, 'r') as answers_file:
+            answers = [line.strip() for line in answers_file]
+
+        response_data = []
         for question, answer in zip(questions, answers):
-            question = question.strip()
-            answer = answer.strip()
+            model = GenerativeModel('gemini-pro')
+            prompt = f"Question: {question}\nAnswer: {answer}\nRate the correctness of the answer out of 10."
+            response = model.generate_content(prompt)
+            rating = extract_rating(response.text)
 
-            # Call rate_answer function for each question-answer pair
-            rate_answer(question, answer, output_file)
+            response_data.append({
+                "question": question,
+                "answer": answer,
+                "rating": rating,
+                "suggestion": response.text if rating is not None and rating < 7 else None
+            })
 
-            # Append the result to the output_results list
-            output_results.append({'question': question, 'answer': answer})
-
-        return Response({'results': output_results})
-
-
-
-
+        return Response(response_data)
