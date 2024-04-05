@@ -1,9 +1,60 @@
-Grammar Score: 0.43706750869750977
-Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
-Sentiment Label: 0
-Grammar Score: 0.8134493231773376
+Grammar Score: 0.893829882144928
 Suggestion: Your grammar is excellent! Keep up the good work.
 Sentiment Label: -1
-Grammar Score: 0.6316130757331848
+Grammar Score: 0.8971646428108215
+Suggestion: Your grammar is excellent! Keep up the good work.
+Sentiment Label: -1
+Grammar Score: 0.6922209858894348
 Suggestion: Your grammar is good, but there's always room for improvement. Consider focusing on a few areas.
+Sentiment Label: -1
+Grammar Score: 0.2308381050825119
+Suggestion: Your grammar needs significant improvement. Consider seeking additional resources or guidance.
+Sentiment Label: -1
+Grammar Score: 0.2664682865142822
+Suggestion: Your grammar needs significant improvement. Consider seeking additional resources or guidance.
+Sentiment Label: 1
+Grammar Score: 0.4185812771320343
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: 1
+Grammar Score: 0.4044703245162964
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: 1
+Grammar Score: 0.433008074760437
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.20635543763637543
+Suggestion: Your grammar needs significant improvement. Consider seeking additional resources or guidance.
+Sentiment Label: -1
+Grammar Score: 0.44067683815956116
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44067683815956116
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44067683815956116
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44067683815956116
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44067683815956116
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44067683815956116
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44067683815956116
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44773679971694946
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44773679971694946
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44773679971694946
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
+Sentiment Label: -1
+Grammar Score: 0.44773679971694946
+Suggestion: Your grammar needs some improvement. Try paying attention to sentence structure and grammar rules.
 Sentiment Label: -1

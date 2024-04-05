@@ -329,7 +329,7 @@ from .models import Interview
 from .serializers import InterviewSerializer
 
 class GetInterviewFeedback(APIView):
-    def get(self, request):
+    def post(self, request):
         userid = request.data.get('user')  # Use query_params for GET requests
         
         if userid is None:
