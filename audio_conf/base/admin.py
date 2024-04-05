@@ -25,3 +25,5 @@ class HrInterviewQuestionsAdmin(admin.ModelAdmin):
 @admin.register(TechQuestion)
 class TechnicalInterviewQuestionsAdmin(admin.ModelAdmin):
     list_display = ('question_list',)
+    
+

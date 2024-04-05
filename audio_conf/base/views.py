@@ -149,7 +149,7 @@ class UserView(APIView):
 class AudioUploadView(APIView):
     parser_classes = (MultiPartParser,)
     transcript_file_path = 'media/transcript.txt'
-    audio_folder_path = 'media/'
+    audio_folder_path = 'media/audio/'
 
     def post(self, request, *args, **kwargs):
         try:
@@ -486,3 +486,33 @@ class RateAnswersAPIView(APIView):
             })
 
         return Response(response_data)
+
+
+
+
+
+
+from .utils.confidenceModel.lstm_function import extract_mfcc, classify_audio
+
+audio_folder_path = "media/audio/"
+
+class ConfidenceEstimation(APIView):
+    def get(self, request):
+        # Define variables for calculating average confidence
+        total_confidence = 0
+        num_files = 0
+
+        # Iterate through audio files in the folder
+        for filename in os.listdir(audio_folder_path):
+            if filename.endswith(".wav"):  # Assuming audio files are in WAV format
+                audio_file_path = os.path.join(audio_folder_path, filename)
+                mfccs = extract_mfcc(audio_file_path)
+                prediction = classify_audio(mfccs)
+                total_confidence += prediction[1]
+                num_files += 1
+                print("this is the confidence=======>>>>>>>>>>>>>>>>>>.",total_confidence)
+
+        # Calculate average confidence
+        average_confidence = total_confidence / num_files if num_files > 0 else 0
+
+        return Response({'average_confidence': average_confidence})
