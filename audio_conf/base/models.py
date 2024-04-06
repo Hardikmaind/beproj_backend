@@ -121,6 +121,8 @@ class Interview(models.Model):
     user_interview_no=models.IntegerField(default=0,editable=False)
     type_of_interview = models.CharField(max_length=10, choices=[('HR', 'HR'), ('Technical', 'Technical')], default='HR')
     feedback = models.TextField(blank=True, null=True)
+    grammer_score = models.FloatField(default=0)
+    confidence_score = models.FloatField(default=0)
 
     def __str__(self):
         return f"Interview ID: {self.interview_id} - User: {self.user.user_name} - Type: {self.type_of_interview}  - User Interview No: {self.user_interview_no}"

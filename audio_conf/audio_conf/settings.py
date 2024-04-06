@@ -108,10 +108,22 @@ WSGI_APPLICATION = 'audio_conf.wsgi.application'
 # }
 
 # this is for the windows xampp server
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'testing',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+# this is for the windows xampserver and it is for the testing purposr
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testing',
+        'NAME': 'demo',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

@@ -22,7 +22,7 @@ class HrInterviewQuestionsSerializer(serializers.ModelSerializer):
 class InterviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interview
-        fields = ['user', 'interview_id', 'type_of_interview', 'feedback','user_interview_no']
+        fields = '__all__'
         read_only_fields = ['interview_id']  # We want the interview_id to be generated automatically
 
 class FeedbackSerializer(serializers.ModelSerializer):

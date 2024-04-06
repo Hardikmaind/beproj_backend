@@ -492,13 +492,103 @@ class RateAnswersAPIView(APIView):
 
 
 
+# from .utils.confidenceModel.lstm_function import extract_mfcc, classify_audio
+
+# audio_folder_path = "media/audio/"
+
+# class ConfidenceEstimation(APIView):
+#     def get(self, request):
+#         # Define variables for calculating average confidence
+#         total_confidence = 0
+#         num_files = 0
+
+#         # Iterate through audio files in the folder
+#         for filename in os.listdir(audio_folder_path):
+#             if filename.endswith(".wav"):  # Assuming audio files are in WAV format
+#                 audio_file_path = os.path.join(audio_folder_path, filename)
+#                 mfccs = extract_mfcc(audio_file_path)
+#                 prediction = classify_audio(mfccs)
+#                 total_confidence += prediction[1]
+#                 num_files += 1
+#                 print("confidence of this audio file===>>>",total_confidence)
+
+#         # Calculate average confidence
+#         average_confidence = total_confidence / num_files if num_files > 0 else 0
+
+#         return Response({'average_confidence': average_confidence})
+
+
+
+
+
+
+
+
+
+
+# from .utils.confidenceModel.lstm_function import extract_mfcc, classify_audio
+
+# audio_folder_path = "media/audio/"
+
+# class ConfidenceEstimation(APIView):
+    
+#     def post(self, request):
+#         # Define variables for calculating average confidence
+#         interviewid=request.data.get('interviewid')
+#         userid=request.data.get('userid')
+#         if interviewid is None:
+#             return Response({'error': 'Interview ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+#         try:
+#             interviewInstance = Interview.objects.filter(interview_id=interviewid,user=userid) 
+           
+#         except:
+#             return Response({'error': 'Interview not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+#         total_confidence = 0
+#         num_files = 0
+
+#         # Iterate through audio files in the folder
+#         for filename in os.listdir(audio_folder_path):
+#             if filename.endswith(".wav"):  # Assuming audio files are in WAV format
+#                 audio_file_path = os.path.join(audio_folder_path, filename)
+#                 mfccs = extract_mfcc(audio_file_path)
+#                 prediction = classify_audio(mfccs)
+#                 total_confidence += prediction[1]
+#                 num_files += 1
+#                 print("confidence of this audio file===>>>",total_confidence)
+
+#         # Calculate average confidence
+#         average_confidence = total_confidence / num_files if num_files > 0 else 0
+#         interviewInstance.grammer_score=0
+#         interviewInstance.confidence_score=average_confidence
+#         interviewInstance.save()
+
+#         return Response({'average_confidence': average_confidence})
+
+
+
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Interview
+import os
 from .utils.confidenceModel.lstm_function import extract_mfcc, classify_audio
 
 audio_folder_path = "media/audio/"
 
 class ConfidenceEstimation(APIView):
-    def get(self, request):
+    
+    def post(self, request):
         # Define variables for calculating average confidence
+        interview_id = request.data.get('interviewid')
+        user_id = request.data.get('userid')
+        
+        if interview_id is None:
+            return Response({'error': 'Interview ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        interview_instance = get_object_or_404(Interview, interview_id=interview_id, user=user_id)
+        
         total_confidence = 0
         num_files = 0
 
@@ -510,9 +600,12 @@ class ConfidenceEstimation(APIView):
                 prediction = classify_audio(mfccs)
                 total_confidence += prediction[1]
                 num_files += 1
-                print("this is the confidence=======>>>>>>>>>>>>>>>>>>.",total_confidence)
+                print("confidence of this audio file===>>>", total_confidence)
 
         # Calculate average confidence
         average_confidence = total_confidence / num_files if num_files > 0 else 0
+        interview_instance.grammer_score = 0  # Assuming this field exists in your Interview model
+        interview_instance.confidence_score = average_confidence
+        interview_instance.save()
 
         return Response({'average_confidence': average_confidence})
