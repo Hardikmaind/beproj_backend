@@ -89,7 +89,21 @@ def extract_mfcc(audio_file_path):
     """Extract MFCC features from the audio file."""
     y, sr = librosa.load(audio_file_path)
     mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=5, n_fft=2048, hop_length=8192)
-    return mfcc
+    new_mfcc = mfcc.flatten()   
+    mean = np.mean(new_mfcc)
+    std = np.std(new_mfcc)
+    z_score_normalized = (new_mfcc - mean) / std
+    normalized_mfcc = z_score_normalized 
+    pre_mfcc = normalized_mfcc.tolist()    
+    mfcc = np.zeros(59)
+    if len(pre_mfcc) < 59:
+        mfcc[:len(pre_mfcc)] = pre_mfcc
+    else:
+        mfcc[:] = pre_mfcc[:59]
+    mfcc=np.round(mfcc,4)
+    final_mfcc=mfcc[:59]
+    final_mfcc = np.expand_dims(final_mfcc, axis=1)
+    return (final_mfcc)
 
 def classify_audio(mfccs):
     """Classify the audio using the pre-trained model."""
