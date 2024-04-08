@@ -175,11 +175,15 @@ class AudioUploadView(APIView):
             # Append the transcript text to the text file
             with open(self.transcript_file_path, 'a') as transcript_file:
                 transcript_file.write(transcript.text + '\n')
-            grammar(r'audio_conf\media\transcript.txt')
+            # obj=grammar(r'audio_conf\media\transcript.txt')
+            # grammar_score = obj['Grammar Score']
+            # suggestion = obj['Suggestion']
 
             return Response({
                 'message': 'Audio file uploaded successfully.',
-                'transcription': transcript.text
+                'transcription': transcript.text,
+                # 'grammar':grammar_score,
+                # 'suggestion':suggestion
             })
 
         except Exception as e:
@@ -328,6 +332,23 @@ from rest_framework.views import APIView
 from .models import Interview
 from .serializers import InterviewSerializer
 
+
+
+
+
+def clear_files(interview_questions, trabscript_file_path,audio_files_path):
+    with open(interview_questions, 'w') as text_file:
+        text_file.write('')
+    with open(trabscript_file_path, 'w') as text_file:
+        text_file.write('')
+    audio_files = os.listdir(audio_files_path)
+    for filename in audio_files:
+        file_path = os.path.join(audio_files_path, filename)
+        if os.path.isfile(file_path) and filename.endswith(('.mp3', '.wav', '.ogg', '.flac', '.aac')):
+            os.remove(file_path)
+
+    print("Text file cleared and audio files deleted successfully.")
+
 class GetInterviewFeedback(APIView):
     def post(self, request):
         userid = request.data.get('user')  # Use query_params for GET requests
@@ -338,6 +359,11 @@ class GetInterviewFeedback(APIView):
         try:
             interviews = Interview.objects.filter(user=userid)  # Filter by user ID
             serialized_interviews = InterviewSerializer(interviews, many=True)
+            interview_questions = 'media/interview_questions.txt' 
+            audio_files_path = 'media/audio'
+            trabscript_file_path = 'media/transcript.txt'
+            clear_files(interview_questions,trabscript_file_path, audio_files_path)
+            
             return Response(serialized_interviews.data)
         except Interview.DoesNotExist:
             return Response({'error': 'Interviews not found'}, status=status.HTTP_404_NOT_FOUND)
@@ -348,7 +374,41 @@ class GetInterviewFeedback(APIView):
 
 
 
+# class GetInterviewFeedback(APIView):
+#     def post(self, request):
+#         userid = request.data.get('user')  # Use query_params for GET requests
+        
+#         if userid is None:
+#             return Response({'error': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+#         try:
+#             interviews = Interview.objects.filter(user=userid)  # Filter by user ID
+#             serialized_interviews = InterviewSerializer(interviews, many=True)
+#             clear_files(text_file_path, audio_files_path)
+            
+#             return Response(serialized_interviews.data)
+#         except Interview.DoesNotExist:
+#             return Response({'error': 'Interviews not found'}, status=status.HTTP_404_NOT_FOUND)
 
+
+
+
+
+
+# def clear_files(text_file_path, audio_files_path):
+#     with open(text_file_path, 'w') as text_file:
+#         text_file.write('')
+#     audio_files = os.listdir(audio_files_path)
+#     for filename in audio_files:
+#         file_path = os.path.join(audio_files_path, filename)
+#         if os.path.isfile(file_path) and filename.endswith(('.mp3', '.wav', '.ogg', '.flac', '.aac')):
+#             os.remove(file_path)
+
+#     print("Text file cleared and audio files deleted successfully.")
+
+# # Example usage
+# text_file_path = 'media/interview_questions.txt' 
+# audio_files_path = 'media/audio'  
 
 
 
@@ -591,6 +651,10 @@ class ConfidenceEstimation(APIView):
         
         total_confidence = 0
         num_files = 0
+        obj=grammar(r'audio_conf\media\transcript.txt')
+        grammar_score = obj['Grammar Score']
+        suggestion = obj['Suggestion']
+        sentiment_label = obj['SentimentLabel']
 
         # Iterate through audio files in the folder
         for filename in os.listdir(audio_folder_path):
@@ -604,8 +668,9 @@ class ConfidenceEstimation(APIView):
 
         # Calculate average confidence
         average_confidence = total_confidence / num_files if num_files > 0 else 0
-        interview_instance.grammer_score = 0  # Assuming this field exists in your Interview model
-        interview_instance.confidence_score = average_confidence
+        interview_instance.grammer_score = grammar_score # Assuming this field exists in your Interview model
+        interview_instance.confidence_score = average_confidence+sentiment_label
+        
         interview_instance.save()
 
-        return Response({'average_confidence': average_confidence})
+        return Response({'average_confidence': average_confidence+sentiment_label,'grammar_score':grammar_score,'suggestion':suggestion,'sentiment_label':sentiment_label})
